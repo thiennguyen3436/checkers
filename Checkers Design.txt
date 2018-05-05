@@ -1,0 +1,98 @@
+Checkers
+	- 2 player version where each player is a different colour
+	- Players could be able to enter their names and then scores could be tallied after each subsequent game
+	- after each game is played the players should switch the order of who goes first
+	- a repition of three moves in a row is a draw and 50 moves without a capture is a draw
+
+player class:
+	- default constructor would give the name "player 1" or "player 2" a constructor taking a string parameter would change the name of the class to the string entered.
+attributes
+	- name:string (for displaying next to the score)
+	- pList:pieces[] (either a vector or an array of the pieces the player currently has)
+
+methods
+	-getName:string (returns the players name)
+
+piece class:
+	these pieces can only move forward.
+
+attributes
+	-xpos:int (stores the current xpos of the piece)
+	-ypos:int (stores the current ypos of the piece)
+	-canCap:bool (stores whether or not this piece can make a capture.)
+methods
+	- move:bool (returns true if the move is legal and made successfully or false if it is not.)
+
+King class:
+	child of piece class
+	would be displayed differently on the board and would be able to move forward and backwards instead of just forward
+attributes
+	- x:int (stores the x-pos of the segment)
+	- y:int (stores the y-pos of the segment)
+
+methods
+	-move:bool (returns true if the move is legal and made successfully or false if it is not.)
+
+board:
+	- we'd have a 2d array/vector storing the pieces with the places that are currently unoccupied storing NULL.
+	- the initial pieces of the board will always be in a fixed position regardless of the size of the board
+	- The number of pieces on the board would vary with board size.
+	- The board must always be a square and must be at least
+
+for dynamic arrays we can have the board size be defined by user input this would also have an impact on the number of pieces each player has.
+
+board style:
+
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+
+this could be repeated and the center of each square is the starting position for the drawing of the board.
+
+an input of width: 8, height: 8 should result in a board as follows: (the design may be altered to be more visually appealing or smaller to allow for larger boards but the general principle should be the same)
+   1     2     3     4     5     6     7     8
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 1
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 2
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 3
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 4
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 5
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 6
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 7
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+# ### # ### # ### # ### # ### # ### # ### # ### #
+#     #     #     #     #     #     #     #     #
+#     #     #     #     #     #     #     #     # 8
+#     #     #     #     #     #     #     #     #
+# ### # ### # ### # ### # ### # ### # ### # ### # 
+
+TESTING!!!
+	- the board has to be a multiple of 4 in terms of width otherwise the game is unbalanced. The number of rows shouldn't be changed.
