@@ -19,20 +19,20 @@ void drawBoard(int cols){
 			}
 			for (int j = 0; j < cols; j++){
 				if((j+i) % 2 == 0){
-					std::cout << "\033[7;30m#######\033[0m";
+					std::cout << "\033[7;30m       \033[0m";
 				}
 				else{
-					std::cout << "#######";
+					std::cout << "       ";
 				}
 			}
 			std::cout << "" << std::endl;
 			for(int k = 0; k < 3; k++){
 				for (int j = 0; j < cols; j++){
 					if((j+i) % 2 == 0){
-						std::cout << "\033[7;30m#     #\033[0m";
+						std::cout << "\033[7;30m       \033[0m";
 					}
 					else{
-						std::cout << "#     #";
+						std::cout << "       ";
 					}
 				}
 				if(k == 1){
@@ -42,10 +42,10 @@ void drawBoard(int cols){
 			}
 			for (int j = 0; j < cols; j++){
 				if((j+i) % 2 == 0){
-					std::cout << "\033[7;30m#######\033[0m";
+					std::cout << "\033[7;30m       \033[0m";
 				}
 				else{
-					std::cout << "#######";
+					std::cout << "       ";
 				}
 			}
 			std::cout << "" << std::endl;
