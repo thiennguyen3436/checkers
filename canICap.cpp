@@ -1,6 +1,6 @@
 //all of this is placeholders until we have the classes implemented properly
 void availableCaps(player player, piece[][] board){
-	//also need a way to test whether or not it is a king. Can have a bool in the attributes?
+	//also need a way to test whether or not it is a king. Can have a bool in the attributes?7
 	for(int i = 0; i < player.count; i++){
 		a = player.list[i];
 		if(a.team == 'w'){

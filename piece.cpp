@@ -1,11 +1,16 @@
 #include "piece.h"
 
-piece::piece(char team){
+piece::piece(char team, int idno){
 	team = team;
 	canCap = false;
+	id = idno;
 }
-void piece::move(bool canCap){
-	if(canCap == true){
-		
-	}
+void piece::setXpos(int xposition){
+	xpos = xposition;
+}
+void piece::setYpos(int yposition){
+	ypos = yposition;
+}
+piece::~piece(){
+
 }
