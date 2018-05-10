@@ -1,0 +1,4 @@
+We want to be able to play one or more games of checkers between 2 people.
+We want a board to be displayed with each move made updating the board.
+We want to be able to change the size of the board.
+We want to be able to track the scores between games.
