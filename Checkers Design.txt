@@ -95,4 +95,14 @@ an input of width: 8, height: 8 should result in a board as follows: (the design
 # ### # ### # ### # ### # ### # ### # ### # ### # 
 
 TESTING!!!
+1. have debug mode: display's raw output instead of full board
+2. i forgot the other option that the tute guy told us
+
+
+abstract classes
+- have player class: human/computer
+	- human has input moves
+	- computer mirror's human's moves
+
+
 	- the board has to be a multiple of 4 in terms of width otherwise the game is unbalanced. The number of rows shouldn't be changed.
