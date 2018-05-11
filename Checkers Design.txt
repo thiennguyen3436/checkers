@@ -4,7 +4,7 @@ Checkers
 	- after each game is played the players should switch the order of who goes first
 	- a repition of three moves in a row is a draw and 50 moves without a capture is a draw
 
-player class:
+player class (abstract: either a human or computer):
 	- default constructor would give the name "player 1" or "player 2" a constructor taking a string parameter would change the name of the class to the string entered.
 attributes
 	- name:string (for displaying next to the score)
