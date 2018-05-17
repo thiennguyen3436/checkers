@@ -10,6 +10,10 @@ void player::moves(piece pieces[][], int location[][])
 {
 	if(canIcap(*this)){
 		//show the captures that are available
+		
+		//possible moves can be stored in pairs with a letter denoting the move and move as the second option of the pair
+		//the move itself can be a pair with a piece and a location
+		
 		//the moves should be stored as a piece with available moves stored as integers referring to specific squares
 	}
 	else{
@@ -18,6 +22,6 @@ void player::moves(piece pieces[][], int location[][])
 }		
 
 // implementation of the default Panda destructor
-Panda::~Panda()
+player::~player()
 {
 }
