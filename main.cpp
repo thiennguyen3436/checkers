@@ -1,30 +1,46 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 
 extern void drawBoard(int cols);
+
 //this is for a debugging option
+int main(){//int argc, char* argv[]){
 
-int main(int argc, char* argv[]){
-
-	for (int i = 0; i < argc; i++) {
+	/*for (int i = 0; i < argc; i++) {
 		std::cout << i << ": " << argv[i] << std::endl;
 		if (argv[i] == "usesimple") {
 			board.simplePrint();
 		}
-	}
+	}*/
+
+//negative numbers
+//non integers
 
 
-	int x = 1;
-	int counter = 0;
-	while(x % 4 != 0){
-		if(counter < 1){
-			std::cout << "Please input your desired width: ";
-			counter = 1;
+	// https://stackoverflow.com/questions/13212043/integer-input-validation-how
+	//this was how I validated user input to ensure it was an integer in the correct range
+	int x;
+	std::string input;
+	std::cout << "Please input your desired width: ";
+	while(std::getline(std::cin, input)){
+		std::stringstream uinput(input);
+
+		if(!(uinput >> x)){
+			std::cout << "Please input an integer: ";
+			continue;
 		}
-	std::cin >> x;
-		if(x % 4 != 0){
-			std::cout << "Please input a multiple of 4: ";
+		if((x < 0) || (x % 4 != 0)){
+			std::cout << "Please input a multiple of 4 greater than 0: ";
+			continue;
 		}
+		char extras;
+		if(uinput >> extras){
+			std::cout << "Only integers please :)" << std::endl;
+		}
+		break;
 	}
+	//draw the initial board
 	drawBoard(x);
 	/*
 	plan for main program
