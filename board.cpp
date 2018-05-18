@@ -98,11 +98,11 @@ void drawBoard(int cols){//, player player1, player player2){
 						//need to ensure it works with different sized vectors otherwise I don't think it will print properly
 						for(int l = 0; l < bigL; l++){
 							if(greens[l].xpos == j && greens[l].ypos == i){
-								std::cout << "\033[7;30m   \033[0;32m" << greens[l].id << "\033[7;30m   \033[0m";
+								std::cout << "\033[7;30m   \033[32;1;40m" << greens[l].id << "\033[0m" <<"\033[7;30m   \033[0m";
 								break;
 							}
 							else if(blues[l].xpos == j && blues[l].ypos == i){
-								std::cout << "\033[7;30m   \033[0;34m" << blues[l].id << "\033[7;30m   \033[0m";
+								std::cout << "\033[7;30m   \033[36;1;40m" << blues[l].id << "\033[0m" << "\033[7;30m   \033[0m";
 								break;
 							}
 							else if(l == (bigL-1)) {
