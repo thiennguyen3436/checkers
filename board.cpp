@@ -3,37 +3,17 @@
 #include "piece.h"
 #include "player.h"
 //this will need to include both piece lists from the players as parameters in order to add them to the board.
-void drawBoard(int cols, player player1){//, player player1, player player2){
+void drawBoard(int cols, player player1, player player2){//, player player1, player player2){
 	//std::vector<piece> blues = player1.pieces;
 	//std::vector<piece> greens = player2.pieces;
-	std::vector<piece> blues;
+	std::vector<piece> blues = player2.List;
 	std::vector<piece> greens = player1.List;
-	/*for(int i = 0; i < greens.size(); i++){
-		piece a = greens[i];
+	for(int i = 0; i < blues.size(); i++){
+		piece a = blues[i];
 		std::cout << a.xpos << " " << a.ypos << std::endl;
 		std::cout << a.id << std::endl;
-		std::cout << a.team << std::endl;
-	}*/
-	piece f = piece('b', 1);
-	f.setXpos(0);
-	f.setYpos(6);
-	blues.push_back(f);
-	piece g = piece('b', 2);
-	g.setXpos(1);
-	g.setYpos(7);
-	blues.push_back(g);
-	piece h = piece('b', 3);
-	h.setXpos(1);
-	h.setYpos(5);
-	blues.push_back(h);
-	piece i = piece('b', 4);
-	i.setXpos(2);
-	i.setYpos(6);
-	blues.push_back(i);
-	piece j = piece('b', 5);
-	j.setXpos(3);
-	j.setYpos(7);
-	blues.push_back(j);
+		std::cout << a.teams << std::endl;
+	}
 	//use erase to remove a piece
 	//greens.erase(greens.begin());
 

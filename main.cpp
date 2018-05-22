@@ -3,7 +3,7 @@
 #include <string>
 #include "player.h"
 
-extern void drawBoard(int cols, player player1);
+extern void drawBoard(int cols, player player1, player player2);
 
 //this is for a debugging option
 int main(){//int argc, char* argv[]){
@@ -42,8 +42,9 @@ int main(){//int argc, char* argv[]){
 		break;
 	}
 	player player1 = player('w', x);
+	player player2 = player('b', x);
 	//draw the initial board
-	drawBoard(x, player1);
+	drawBoard(x, player1, player2);
 	/*
 	plan for main program
 	make players

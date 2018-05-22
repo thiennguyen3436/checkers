@@ -14,22 +14,34 @@ player::player(char team1, int cols)
 		List.push_back(a);
 	}
 	int counter = 0;
-	for(int i = 0; i < cols; i++){
-		for(int j = 0; j < 3; j++){
-			if ((i+j) % 2 == 0){
-				piece test = List[counter];
-				if(test.teams == 'w'){
-					test.setXpos(i);
-					test.setYpos(j);
-					std::swap(List[counter], test);
-					counter++;
-				}
-				else if(team == 'b'){
-					test.setXpos(i);
-					test.setYpos(7-j); 
-					counter++;
-				}
+	if(team == 'w'){
+		for(int i = 0; i < cols; i++){
+			for(int j = 0; j < 3; j++){
+				if ((i+j) % 2 == 0){
+					piece test = List[counter];
+					if(test.teams == 'w'){
 
+						test.setXpos(i);
+						test.setYpos(j);
+						std::swap(List[counter], test);
+						counter++;
+					}
+				}
+			}
+		}
+	}
+	else if(team == 'b'){
+		for(int i = 0; i < cols; i++){
+			for(int j = 7; j >4; j--){
+				if ((i+j) % 2 == 0){
+					piece test = List[counter];
+					if(test.teams == 'b'){
+						test.setXpos(i);
+						test.setYpos(j);
+						std::swap(List[counter], test);
+						counter++;
+					}
+				}
 			}
 		}
 	}
