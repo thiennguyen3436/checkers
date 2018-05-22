@@ -4,7 +4,54 @@
 #include "player.h"
 
 extern void drawBoard(int cols, player player1, player player2);
+//stores the initial position of the pieces;
+void check_pieces(int* Board, int cols, player player1, player player2){
+	std::vector<piece> A = player1.List;
+	std::vector<piece> B = player2.List;
 
+	int bigL;
+	if(A.size() >= B.size()){
+		bigL = A.size();
+	}		
+	else{
+		bigL = B.size();
+	}
+	//If you have a multidimensional array defined as int [][], then x = y[a][b] is equivalent to x = *((int *)y + a * NUMBER_OF_COLUMNS + b);
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < cols; j ++){
+			for(int l = 0; l < A.size(); l++){
+				if(A[l].xpos == j && A[l].ypos == i){
+					if(A[l].teams == 'w'){
+						*(Board + j*8 + i) = 1;
+					}
+					else if(A[l].teams == 'b'){
+						*(Board + j*8 + i) = 2;
+					}
+				}
+			}
+			for(int l = 0; l < B.size(); l ++){
+				if(B[l].xpos == j && B[l].ypos == i){
+					if(B[l].teams == 'w'){
+						*(Board + j*8 + i) = 1;
+					}
+					else if(B[l].teams == 'b'){
+						*(Board + j*8 + i) = 2;
+					} 
+				}
+			}
+		}
+	}
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < cols; j ++){
+			if(*(Board + j*8 + i) != 0){
+
+			}
+			else{
+				*(Board + j*8 + i) = 0;
+			}
+		}
+	}
+}
 //this is for a debugging option
 int main(){//int argc, char* argv[]){
 
@@ -44,7 +91,20 @@ int main(){//int argc, char* argv[]){
 	player player1 = player('w', x);
 	player player2 = player('b', x);
 	//draw the initial board
+	int board[x][8];
+	for(int i = 0; i < x; i ++){
+		for(int j = 0; j < 8; j ++){
+			board[i][j] = 0;
+		}
+	}
+	int* ptr = &board[0][0];
+	check_pieces(ptr, x, player1, player2);
 	drawBoard(x, player1, player2);
+	for(int i = 0; i < 8; i ++){
+		for(int j = 0; j < x; j ++){
+			std::cout << i << " + " << j << " = " << board[j][i] << std::endl;
+		}
+	}
 	/*
 	plan for main program
 	make players
@@ -73,3 +133,4 @@ int main(){//int argc, char* argv[]){
 	*/
 	return 0;
 }
+

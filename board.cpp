@@ -8,12 +8,6 @@ void drawBoard(int cols, player player1, player player2){//, player player1, pla
 	//std::vector<piece> greens = player2.pieces;
 	std::vector<piece> blues = player2.List;
 	std::vector<piece> greens = player1.List;
-	for(int i = 0; i < blues.size(); i++){
-		piece a = blues[i];
-		std::cout << a.xpos << " " << a.ypos << std::endl;
-		std::cout << a.id << std::endl;
-		std::cout << a.teams << std::endl;
-	}
 	//use erase to remove a piece
 	//greens.erase(greens.begin());
 
@@ -65,11 +59,21 @@ void drawBoard(int cols, player player1, player player2){//, player player1, pla
 						//need to ensure it works with different sized vectors otherwise I don't think it will print properly
 						for(int l = 0; l < bigL; l++){
 							if(greens[l].xpos == j && greens[l].ypos == i){
-								std::cout << "\033[7;30m   \033[32;1;40m" << greens[l].id << "\033[0m" <<"\033[7;30m   \033[0m";
+								if(greens[l].id > 9){
+									std::cout << "\033[7;30m   \033[32;1;40m" << greens[l].id << "\033[0m" <<"\033[7;30m  \033[0m";
+								}
+								else{
+									std::cout << "\033[7;30m   \033[32;1;40m" << greens[l].id << "\033[0m" <<"\033[7;30m   \033[0m";
+								}
 								break;
 							}
 							else if(blues[l].xpos == j && blues[l].ypos == i){
-								std::cout << "\033[7;30m   \033[36;1;40m" << blues[l].id << "\033[0m" << "\033[7;30m   \033[0m";
+								if(greens[l].id > 9){
+									std::cout << "\033[7;30m   \033[36;1;40m" << blues[l].id << "\033[0m" << "\033[7;30m  \033[0m";
+								}
+								else{
+									std::cout << "\033[7;30m   \033[36;1;40m" << blues[l].id << "\033[0m" << "\033[7;30m   \033[0m";
+								}
 								break;
 							}
 							else if(l == (bigL-1)) {
@@ -77,7 +81,6 @@ void drawBoard(int cols, player player1, player player2){//, player player1, pla
 							}
 							
 						}
-						//
 						
 					}
 					else{
