@@ -1,8 +1,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "player.h"
 
-extern void drawBoard(int cols);
+extern void drawBoard(int cols, player player1);
 
 //this is for a debugging option
 int main(){//int argc, char* argv[]){
@@ -30,7 +31,7 @@ int main(){//int argc, char* argv[]){
 			std::cout << "Please input an integer: ";
 			continue;
 		}
-		if((x < 0) || (x % 4 != 0)){
+		if((x <= 0) || (x % 4 != 0)){
 			std::cout << "Please input a multiple of 4 greater than 0: ";
 			continue;
 		}
@@ -40,8 +41,9 @@ int main(){//int argc, char* argv[]){
 		}
 		break;
 	}
+	player player1 = player('w', x);
 	//draw the initial board
-	drawBoard(x);
+	drawBoard(x, player1);
 	/*
 	plan for main program
 	make players

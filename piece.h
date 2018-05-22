@@ -7,7 +7,7 @@ protected:
 
 public:
 	piece(char team, int id);
-	char team;
+	char teams;
 	int id;
 	int name;
 	int xpos;

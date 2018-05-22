@@ -1,7 +1,7 @@
 #include "piece.h"
 
 piece::piece(char team, int idno){
-	team = team;
+	teams = team;
 	canCap = false;
 	id = idno;
 	xpos = 1000;
