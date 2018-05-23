@@ -113,34 +113,52 @@ int main(){//int argc, char* argv[]){
 	
 	update_pieces(ptr, x, player1, player2);
 	drawBoard(ptr, x);// player1, player2);
-	//player1.move(player2);
-	
-	//this section below was testing that a player can move pieces and it's reflected in the board
-	std::vector<piece> testing = player1.List;
-	for(int i = 0; i < testing.size(); i ++){
-		piece a = testing[i];
-		if(a.xpos == 0 && a.ypos == 0){
-			a.setYpos(4);
-			a.setXpos(2);
-			std::swap(player1.List[i], a);
-			break;
-		}
-	}
-	//This tested whether or not a piece could be deleted from the vector.
-	for(int i = 0; i < testing.size(); i ++){
-		piece a = testing[i];
-		if(a.xpos == 1 && a.ypos == 1){
-			player1.List.erase(player1.List.begin() + i);
-			break;
-		}
-	}
-	//
-	update_pieces(ptr, x, player1, player2);
-	drawBoard(ptr, x);
 
-	player2.move(play1);
-	update_pieces(ptr, x, player1, player2);
-	drawBoard(ptr,x);
+	bool gameOver = false;
+
+	while(gameOver == false){
+		std::cout << "player 1's turn:" << std::endl;
+		player1.move(play2);
+		update_pieces(ptr, x, player1, player2);
+		drawBoard(ptr,x);
+		if(player2.List.size() == 0){
+			gameOver = true;
+			std::cout << "Player 1 won!" << std::endl;
+			continue;
+		}
+		//this section below was testing that a player can move pieces and it's reflected in the board
+		//std::vector<piece> testing = player1.List;
+		/*for(int i = 0; i < testing.size(); i ++){
+			piece a = testing[i];
+			if(a.xpos == 0 && a.ypos == 0){
+				a.setYpos(4);
+				a.setXpos(2);
+				std::swap(player1.List[i], a);
+				break;
+			}
+		}
+		//This tested whether or not a piece could be deleted from the vector.
+		for(int i = 0; i < testing.size(); i ++){
+			piece a = testing[i];
+			if(a.xpos == 1 && a.ypos == 1){
+				player1.List.erase(player1.List.begin() + i);
+				break;
+			}
+		}
+		//
+		update_pieces(ptr, x, player1, player2);
+		drawBoard(ptr, x);
+		*/
+		std::cout << "player 2's turn:" << std::endl;
+		player2.move(play1);
+		update_pieces(ptr, x, player1, player2);
+		drawBoard(ptr,x);
+		if(player1.List.size() == 0){
+			gameOver = true;
+			std::cout << "Player 2 won!" << std::endl;
+			continue;
+		}
+	}
 	//
 
 
