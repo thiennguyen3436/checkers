@@ -11,9 +11,9 @@ public:
 	int id;
 	int name;
 	int xpos;
+	int ypos;
 	void setXpos(int xposition);
 	void setYpos(int yposition);
-	int ypos;
 	bool canCap;
 	~piece();
 };

@@ -3,11 +3,13 @@
 #include "piece.h"
 #include "player.h"
 //this will need to include both piece lists from the players as parameters in order to add them to the board.
-void drawBoard(int cols, player player1, player player2){//, player player1, player player2){
+void drawBoard(int* Board, int cols){//, player player1, player player2){
 	//std::vector<piece> blues = player1.pieces;
 	//std::vector<piece> greens = player2.pieces;
-	std::vector<piece> blues = player2.List;
-	std::vector<piece> greens = player1.List;
+	
+	//std::vector<piece> blues = player2.List;
+	//std::vector<piece> greens = player1.List;
+	
 	//use erase to remove a piece
 	//greens.erase(greens.begin());
 
@@ -21,10 +23,10 @@ void drawBoard(int cols, player player1, player player2){//, player player1, pla
 			if(i == 0){
 				for (int j = 0; j < cols; j++){
 					if(j<9){
-						std::cout << "   " << j+1 << "   ";
+						std::cout << "   " << j << "   ";
 					}
 					else{
-						std::cout << "  " << j+1 << "   ";
+						std::cout << "  " << j << "   ";
 					}
 				}
 			std::cout << "" << std::endl;
@@ -47,6 +49,17 @@ void drawBoard(int cols, player player1, player player2){//, player player1, pla
 						std::cout << "\033[7;30m       \033[0m";
 					}
 					else if((j+i) % 2 == 0 && k == 1){
+						if(*(Board+ j*8 + i) == 1){
+								std::cout << "\033[7;30m   \033[32;1;40m" << " " << "\033[0m" <<"\033[7;30m   \033[0m";
+						}
+						else if(*(Board+ j*8 + i) == 2){
+							std::cout << "\033[7;30m   \033[36;1;40m" << " " << "\033[0m" << "\033[7;30m   \033[0m";
+						}
+						else{
+							std::cout << "\033[7;30m       \033[0m";
+						}
+
+						/*
 						int bigL;
 						if(greens.size() >= blues.size()){
 							bigL = greens.size();
@@ -81,22 +94,14 @@ void drawBoard(int cols, player player1, player player2){//, player player1, pla
 							}
 							
 						}
-						
+						*/
 					}
 					else{
-						for(int l = 0; l < greens.size(); l++){
-							if(greens[l].xpos == j && greens[l].ypos == i && k == 1){
-								std::cout << "   \033[0;32m" << greens[l].id << "\033[0m   ";
-								break;
-							}
-							else if(l == (greens.size()-1)) {
-								std::cout << "       ";
-							}
-						}
+						std::cout << "       ";
 					}
 				}
 				if(k == 1){
-					std::cout << " " << i+1;
+					std::cout << " " << i;
 				}
 				std::cout << "" << std::endl;
 			}

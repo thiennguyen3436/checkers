@@ -2,12 +2,21 @@
 #include <sstream>
 #include <string>
 #include "player.h"
+#include <utility>
 
-extern void drawBoard(int cols, player player1, player player2);
+extern void drawBoard(int* Board, int cols);//, player player1, player player2);
 //stores the initial position of the pieces;
-void check_pieces(int* Board, int cols, player player1, player player2){
+void update_pieces(int* Board, int cols, player player1, player player2){
 	std::vector<piece> A = player1.List;
 	std::vector<piece> B = player2.List;
+
+
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < cols; j ++){
+			*(Board + j*8 + i) = 0;
+		}
+	}
+
 
 	int bigL;
 	if(A.size() >= B.size()){
@@ -98,17 +107,41 @@ int main(){//int argc, char* argv[]){
 		}
 	}
 	int* ptr = &board[0][0];
-	check_pieces(ptr, x, player1, player2);
-	drawBoard(x, player1, player2);
+	update_pieces(ptr, x, player1, player2);
+	drawBoard(ptr, x);// player1, player2);
 	for(int i = 0; i < 8; i ++){
 		for(int j = 0; j < x; j ++){
 			std::cout << i << " + " << j << " = " << board[j][i] << std::endl;
 		}
 	}
+	//this section below was testing that a player can move pieces and it's reflected in the board
+	std::vector<piece> testing = player1.List;
+	for(int i = 0; i < testing.size(); i ++){
+		piece a = testing[i];
+		if(a.xpos == 0 && a.ypos == 0){
+			a.setYpos(4);
+			a.setXpos(2);
+			std::swap(player1.List[i], a);
+			break;
+		}
+	}
+	//This tested whether or not a piece could be deleted from the vector.
+	for(int i = 0; i < testing.size(); i ++){
+		piece a = testing[i];
+		if(a.xpos == 1 && a.ypos == 1){
+			player1.List.erase(player1.List.begin() + i);
+			break;
+		}
+	}
+	//
+	update_pieces(ptr, x, player1, player2);
+	drawBoard(ptr, x);
+	//
+
+
 	/*
 	plan for main program
 	make players
-	get user input for player names
 	start game
 	while loop encapsulating everything in order to finish a game
 	alternate between black and white
