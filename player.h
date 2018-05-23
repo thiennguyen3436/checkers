@@ -7,9 +7,10 @@ class player
 protected:
 
 public:
-	player(char team, int boardsize);
+	player(char team, int boardsize, int* board);
 	std::vector<piece> List;
-	//void moves(piece pieces[][], int location[][]);
+	int* board;
+	void move();
 	~player();
 	char team;
 };

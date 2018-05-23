@@ -97,9 +97,6 @@ int main(){//int argc, char* argv[]){
 		}
 		break;
 	}
-	player player1 = player('w', x);
-	player player2 = player('b', x);
-	//draw the initial board
 	int board[x][8];
 	for(int i = 0; i < x; i ++){
 		for(int j = 0; j < 8; j ++){
@@ -107,13 +104,14 @@ int main(){//int argc, char* argv[]){
 		}
 	}
 	int* ptr = &board[0][0];
+	player player1 = player('w', x, ptr);
+	player player2 = player('b', x, ptr);
+	//draw the initial board
+	
 	update_pieces(ptr, x, player1, player2);
 	drawBoard(ptr, x);// player1, player2);
-	for(int i = 0; i < 8; i ++){
-		for(int j = 0; j < x; j ++){
-			std::cout << i << " + " << j << " = " << board[j][i] << std::endl;
-		}
-	}
+	player1.move();
+	/*
 	//this section below was testing that a player can move pieces and it's reflected in the board
 	std::vector<piece> testing = player1.List;
 	for(int i = 0; i < testing.size(); i ++){
@@ -138,7 +136,7 @@ int main(){//int argc, char* argv[]){
 	drawBoard(ptr, x);
 	//
 
-
+*/
 	/*
 	plan for main program
 	make players

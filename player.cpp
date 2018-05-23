@@ -4,9 +4,48 @@
 #include "player.h"
 #include <utility>
 
-extern bool canICap(player player);
-player::player(char team1, int cols)
+extern int* ptr;
+void checkCaps(player player1, int* Board){
+	for(int i = 0; i < player1.List.size(); i++){
+		piece a = player1.List[i];
+		int j = a.xpos;
+		int i = a.ypos;
+		if(a.teams == 'w'){
+			if(((*(Board + (j+1)*8 + i+1) == 1) && (*(Board + (j+2)*8 + i+2) == 0)) || ((*(Board + (j-1)*8 + i+1) == 1) && (*(Board + (j-2)*8 + i+2) == 0))){
+				a.canCap = true;
+			}
+			else{
+				a.canCap = false;
+			}
+		}
+		else if(a.teams == 'b'){
+			if(((*(Board + (j+1)*8 + i-1) == 1) && (*(Board + (j+2)*8 + i-2) == 0)) || ((*(Board + (j-1)*8 + i-1) == 1) && (*(Board + (j-2)*8 + i-2) == 0))){
+				a.canCap = true;
+			}
+			else{
+				a.canCap = false;
+			}
+		}
+	}
+}
+
+
+
+bool canIcap(player player){
+	checkCaps(player, player.board);
+	bool capturing = false;
+	for(int i = 0; i < player.List.size(); i++){
+		piece a = player.List[i];
+		if(a.canCap == true){
+			capturing = true;
+			break;
+		}
+	}
+	return capturing;
+}
+player::player(char team1, int cols, int* boards)
 {
+	board = boards;
 	team = team1;
 	int initpieces = (cols*6)/4;
 	for(int i = 0; i < initpieces; i++){
@@ -47,21 +86,10 @@ player::player(char team1, int cols)
 	}
 
 }
-//we have to use vectors so we cna have different types
-/*void player::moves(piece pieces[][], int location[][])
-{
-	if(canIcap(*this)){
-		//show the captures that are available
-		
-		//possible moves can be stored in pairs with a letter denoting the move and move as the second option of the pair
-		//the move itself can be a pair with a piece and a location
-		
-		//the moves should be stored as a piece with available moves stored as integers referring to specific squares
-	}
-	else{
-		//show the moves that can be made and make the user pick one
-	}
-}*/		
+void player::move(){
+	bool yeah = canIcap(*this);
+	std::cout << yeah << std::endl;
+}
 
 // implementation of the default Player destructor
 player::~player()
