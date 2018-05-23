@@ -13,6 +13,9 @@ void piece::setXpos(int xposition){
 void piece::setYpos(int yposition){
 	ypos = yposition;
 }
+void piece::setCap(bool captures){
+	canCap == captures;
+}
 piece::~piece(){
 
 }

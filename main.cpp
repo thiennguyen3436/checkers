@@ -106,12 +106,15 @@ int main(){//int argc, char* argv[]){
 	int* ptr = &board[0][0];
 	player player1 = player('w', x, ptr);
 	player player2 = player('b', x, ptr);
+
+	player* play1 = &player1;
+	player* play2 = &player2;
 	//draw the initial board
 	
 	update_pieces(ptr, x, player1, player2);
 	drawBoard(ptr, x);// player1, player2);
-	player1.move();
-	/*
+	//player1.move(player2);
+	
 	//this section below was testing that a player can move pieces and it's reflected in the board
 	std::vector<piece> testing = player1.List;
 	for(int i = 0; i < testing.size(); i ++){
@@ -134,9 +137,13 @@ int main(){//int argc, char* argv[]){
 	//
 	update_pieces(ptr, x, player1, player2);
 	drawBoard(ptr, x);
+
+	player2.move(play1);
+	update_pieces(ptr, x, player1, player2);
+	drawBoard(ptr,x);
 	//
 
-*/
+
 	/*
 	plan for main program
 	make players

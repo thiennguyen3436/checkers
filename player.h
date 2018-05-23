@@ -9,9 +9,11 @@ protected:
 public:
 	player(char team, int boardsize, int* board);
 	std::vector<piece> List;
+	int width;
 	int* board;
-	void move();
+	void move(player* altPlayer);
 	~player();
 	char team;
+	int intTeam;
 };
 #endif //PLAYER_H

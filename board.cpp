@@ -117,4 +117,5 @@ void drawBoard(int* Board, int cols){//, player player1, player player2){
 			//this is the end of the board
 		}
 	}
+	std::cout << "" << std::endl;
 }

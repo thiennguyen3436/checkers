@@ -14,6 +14,7 @@ public:
 	int ypos;
 	void setXpos(int xposition);
 	void setYpos(int yposition);
+	void setCap(bool captures);
 	bool canCap;
 	~piece();
 };
