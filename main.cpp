@@ -4,7 +4,8 @@
 #include "player.h"
 #include <utility>
 
-extern void drawBoard(int* Board, int cols);//, player player1, player player2);
+extern void drawBoard(int* Board, int cols);
+
 //stores the initial position of the pieces;
 void update_pieces(int* Board, int cols, player player1, player player2){
 	std::vector<piece> A = player1.List;
@@ -25,7 +26,7 @@ void update_pieces(int* Board, int cols, player player1, player player2){
 	else{
 		bigL = B.size();
 	}
-	//If you have a multidimensional array defined as int [][], then x = y[a][b] is equivalent to x = *((int *)y + a * NUMBER_OF_COLUMNS + b);
+	//x = y[a][b] is equivalent to x = *((int *)y + a * NUMBER_OF_COLUMNS + b);
 	for(int i = 0; i < 8; i++){
 		for(int j = 0; j < cols; j ++){
 			for(int l = 0; l < A.size(); l++){
@@ -61,19 +62,7 @@ void update_pieces(int* Board, int cols, player player1, player player2){
 		}
 	}
 }
-//this is for a debugging option
-int main(){//int argc, char* argv[]){
-
-	/*for (int i = 0; i < argc; i++) {
-		std::cout << i << ": " << argv[i] << std::endl;
-		if (argv[i] == "usesimple") {
-			board.simplePrint();
-		}
-	}*/
-
-//negative numbers
-//non integers
-
+int main(){
 
 	// https://stackoverflow.com/questions/13212043/integer-input-validation-how
 	//this was how I validated user input to ensure it was an integer in the correct range
@@ -106,19 +95,21 @@ int main(){//int argc, char* argv[]){
 	int* ptr = &board[0][0];
 	player player1 = player('w', x, ptr);
 	player player2 = player('b', x, ptr);
+
 	int pieceCountA = player1.List.size();
 	int pieceCountB = player2.List.size();
 
-	player* play1 = &player1;
+	player* play1 = &player1; //used for captures made by the opposite player
 	player* play2 = &player2;
 	//draw the initial board
 	
 	update_pieces(ptr, x, player1, player2);
-	drawBoard(ptr, x);// player1, player2);
+	drawBoard(ptr, x);
 
-	bool gameOver = false;
-	int moveCounter = 0;
-	int total_moves = 0;
+	bool gameOver = false; //checks whether or not someone won or the game was a draw
+	int moveCounter = 0; // tallies number of moves without a capture
+	int total_moves = 0; // tallies total number of moves
+	int draw; // checks whether or not a draw has been agreed upon
 
 	while(gameOver == false){
 		std::cout << "player 1's turn:" << std::endl;
@@ -133,41 +124,23 @@ int main(){//int argc, char* argv[]){
 			std::cout << "Player 1 won!" << std::endl;
 			continue;
 		}
-		//this section below was testing that a player can move pieces and it's reflected in the board
-		//std::vector<piece> testing = player1.List;
-		/*for(int i = 0; i < testing.size(); i ++){
-			piece a = testing[i];
-			if(a.xpos == 0 && a.ypos == 0){
-				a.setYpos(4);
-				a.setXpos(2);
-				std::swap(player1.List[i], a);
-				break;
-			}
-		}
-		//This tested whether or not a piece could be deleted from the vector.
-		for(int i = 0; i < testing.size(); i ++){
-			piece a = testing[i];
-			if(a.xpos == 1 && a.ypos == 1){
-				player1.List.erase(player1.List.begin() + i);
-				break;
-			}
-		}
-		//
-		update_pieces(ptr, x, player1, player2);
-		drawBoard(ptr, x);
-		*/
+
 		std::cout << "player 2's turn:" << std::endl;
 		player2.move(play1);
 		update_pieces(ptr, x, player1, player2);
 		drawBoard(ptr,x);
+
 		if(player1.List.size() != pieceCountA){
 			pieceCountA = player1.List.size();
 		}
+
+		//checks whether or not the other player has any pieces left, if not you win
 		if(pieceCountA == 0){
 			gameOver = true;
 			std::cout << "Player 2 won!" << std::endl;
-			continue;
+			continue; //immediately ends the game
 		}
+
 		if(pieceCountA == player1.List.size() && pieceCountB == player2.List.size()){
 			moveCounter++;
 			if(moveCounter == 50){
@@ -176,8 +149,10 @@ int main(){//int argc, char* argv[]){
 				continue;
 			}
 		}
-		int draw;
-		if(total_moves > x*4){
+		total_moves++;
+		std::cout << total_moves << "  " << x*2 << std::endl;
+		if(total_moves > x){
+			//validating user input for a draw
 			std::string inputd;
 			std::cout << "Do both players agree to a draw? (1 for yes / 2 for no): ";
 			while(std::getline(std::cin, inputd)){
@@ -187,7 +162,7 @@ int main(){//int argc, char* argv[]){
 					std::cout << "Please input 1 or 2: ";
 					continue;
 				}
-				if((x < 1) || x > 2){
+				if((draw < 1) || draw > 2){
 					std::cout << "Please input 1 or 2: ";
 					continue;
 				}
@@ -198,40 +173,12 @@ int main(){//int argc, char* argv[]){
 				break;
 			}
 		}
-		total_moves++;
+		//if both players agree to a draw end the game
 		if(draw == 1){
 			std::cout << "You agreed to a draw" << std::endl;
 			gameOver = true;
 		}
 	}
-	//
-
-
-	/*
-	plan for main program
-	make players
-	start game
-	while loop encapsulating everything in order to finish a game
-	alternate between black and white
-		white:
-			check available captures
-			if none
-				provide possible moves
-				pick a move
-			else
-				provide possible moves
-				pick a move
-			check if opponnent has no pieces or if the game is a draw
-			if game is won
-				
-			else
-				end turn
-		black:
-			repeat what white did
-
-
-		should have functions for everything that is possible/repeated to eliminate mess. We could even have a Turn function that takes a player object as a parameter.
-	*/
 	return 0;
 }
 

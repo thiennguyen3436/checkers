@@ -109,18 +109,16 @@ player::player(char team1, int cols, int* boards)
 void player::move(player* otherPlayer){
 	checkCaps((*this), (*this).board);
 	bool captures = canIcap(*this);
-	bool your_piece = false;
-	bool move_made = false;
-	bool valid_move = false;
+	bool your_piece = false; //checks whether you're selecting your own valid piece
+	bool valid_move = false; //checks whether you've made a valid move
 	int xcoor;
 	int xdest;
 	int ydest;
 	int ycoor;
-	std::string input1;
-	std::string input2;
-	std::string input3;
-	std::string input4;
-	//while(move_made == false){
+	std::string input1; //xcoor input
+	std::string input2; //ycoor input
+	std::string input3; //xdest input
+	std::string input4; //ydest input
 		while(your_piece == false){
 			std::cout << "Please input the X coordinate for your piece: ";
 			while(std::getline(std::cin, input1)){
@@ -158,7 +156,7 @@ void player::move(player* otherPlayer){
 				}
 				break;
 			}
-			//verifies that the player is moving their own piece
+			//verifies that the player is moving their own valid piece
 			if(*((*this).board + xcoor*8 + ycoor) == (*this).intTeam){
 				if(captures == true){
 					for(int i = 0; i < (*this).List.size(); i++){
@@ -177,7 +175,13 @@ void player::move(player* otherPlayer){
 
 				}
 				else if((*this).team == 'b'){
-					if(*((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam && *((*this).board + (xcoor-1)*8 + (ycoor-1)) == (*this).intTeam){
+					if(xcoor == 0 && *((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam){
+						std::cout << "You can't move that piece!" << std::endl;
+					}
+					else if(xcoor == (*this).width - 1 && *((*this).board + (xcoor-1)*8 + (ycoor-1)) == (*this).intTeam){
+						std::cout << "You can't move that piece!" << std::endl;
+					}
+					else if(*((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam && *((*this).board + (xcoor-1)*8 + (ycoor-1)) == (*this).intTeam){
 						std::cout << "You can't move that piece!" << std::endl;
 					}
 					else{
@@ -185,7 +189,13 @@ void player::move(player* otherPlayer){
 					}
 				}
 				else if((*this).team == 'w'){
-					if(*((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam && *((*this).board + (xcoor-1)*8 + (ycoor+1)) == (*this).intTeam){
+					if(xcoor == 0 && *((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam){
+						std::cout << "You can't move that piece!" << std::endl;
+					}
+					else if(xcoor == (*this).width - 1 && *((*this).board + (xcoor-1)*8 + (ycoor+1)) == (*this).intTeam){
+						std::cout << "You can't move that piece!" << std::endl;
+					}
+					else if(*((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam && *((*this).board + (xcoor-1)*8 + (ycoor+1)) == (*this).intTeam){
 						std::cout << "You can't move that piece!" << std::endl;
 					}
 					else{
@@ -260,7 +270,7 @@ void player::move(player* otherPlayer){
 						capture(otherPlayer, xcoor+deltaX, ycoor+deltaY);
 					}
 				}
-				//they need verification in order to say they were valid moves
+				//this checks whether or not you've made a valid move choice
 				else{
 					std::cout << "Please input the X coordinate for your destination: ";
 					while(std::getline(std::cin, input3)){
@@ -289,7 +299,7 @@ void player::move(player* otherPlayer){
 							continue;
 						}
 						if((ydest != ycoor - 1)){
-							std::cout << "Please input a valid y value( "<< ycoor-1<< ":";
+							std::cout << "Please input a valid y value: ";
 							continue;
 						}
 						char extras;
@@ -398,7 +408,7 @@ void player::move(player* otherPlayer){
 							continue;
 						}
 						if((ydest != ycoor + 1)){
-							std::cout << "Please input a valid y value blah1: ";
+							std::cout << "Please input a valid y value: ";
 							continue;
 						}
 						char extras;
@@ -526,9 +536,6 @@ void player::move(player* otherPlayer){
 		}
 
 	}
-//}
-
-// implementation of the default Player destructor
 player::~player()
 {
 }

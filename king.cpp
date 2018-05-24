@@ -6,7 +6,7 @@ king::king(char team, int currentx, int currenty){
 	canCap = false;
 	xpos = currentx;
 	ypos = currenty;
-	ymovement = 0;
+	ymovement = 0; //can move either forward or backwards
 }
 king::~king(){
 
