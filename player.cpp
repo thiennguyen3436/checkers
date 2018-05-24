@@ -36,6 +36,7 @@ void capture(player* altPlayer, int xloc, int yloc){
 	for(int i = 0; i < altPlayer->List.size(); i++){
 		if(altPlayer->List[i].xpos == xloc && altPlayer->List[i].ypos == yloc){
 			altPlayer->List.erase(altPlayer->List.begin() + i);
+
 			break;
 		}
 	}
@@ -169,8 +170,21 @@ void player::move(player* otherPlayer){
 					}
 
 				}
-				else{
-					your_piece = true;
+				else if((*this).team == 'b'){
+					if(*((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam && *((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam){
+						std::cout << "You can't move that piece!" << std::endl;
+					}
+					else{
+						your_piece = true;
+					}
+				}
+				else if((*this).team == 'w'){
+					if(*((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam && *((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam){
+						std::cout << "You can't move that piece!" << std::endl;
+					}
+					else{
+						your_piece = true;
+					}
 				}
 			}
 			else{
@@ -178,7 +192,6 @@ void player::move(player* otherPlayer){
 			}
 		}
 		while(valid_move == false){
-			std::cout << (*this).team <<std::endl;
 			if((*this).team == 'b'){
 				if (captures == true){
 					std::cout << "Please input the X coordinate for your destination: ";
@@ -272,7 +285,6 @@ void player::move(player* otherPlayer){
 						valid_move = true;
 						for(int i = 0; i < (*this).List.size(); i++){
 							if((*this).List[i].xpos == xcoor && (*this).List[i].ypos == ycoor){
-								std::cout<< "moving!" <<std::endl;
 								(*this).List[i].xpos = xdest;
 								(*this).List[i].ypos = ydest;
 							}

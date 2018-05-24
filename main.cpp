@@ -106,6 +106,8 @@ int main(){//int argc, char* argv[]){
 	int* ptr = &board[0][0];
 	player player1 = player('w', x, ptr);
 	player player2 = player('b', x, ptr);
+	int pieceCountA = player1.List.size();
+	int pieceCountB = player2.List.size();
 
 	player* play1 = &player1;
 	player* play2 = &player2;
@@ -115,13 +117,17 @@ int main(){//int argc, char* argv[]){
 	drawBoard(ptr, x);// player1, player2);
 
 	bool gameOver = false;
+	int moveCounter = 0;
 
 	while(gameOver == false){
 		std::cout << "player 1's turn:" << std::endl;
 		player1.move(play2);
 		update_pieces(ptr, x, player1, player2);
 		drawBoard(ptr,x);
-		if(player2.List.size() == 0){
+		if(player2.List.size() != pieceCountB){
+			pieceCountB = player2.List.size();
+		}
+		if(pieceCountB == 0){
 			gameOver = true;
 			std::cout << "Player 1 won!" << std::endl;
 			continue;
@@ -153,10 +159,20 @@ int main(){//int argc, char* argv[]){
 		player2.move(play1);
 		update_pieces(ptr, x, player1, player2);
 		drawBoard(ptr,x);
-		if(player1.List.size() == 0){
+		if(player1.List.size() != pieceCountA){
+			pieceCountA = player1.List.size();
+		}
+		if(pieceCountA == 0){
 			gameOver = true;
 			std::cout << "Player 2 won!" << std::endl;
 			continue;
+		}
+		if(pieceCountA == player1.List.size() && pieceCountB == player2.List.size()){
+			moveCounter++;
+			if(moveCounter == 50){
+				gameOver = true;
+				continue;
+			}
 		}
 	}
 	//

@@ -3,16 +3,21 @@
 
 #include <string>
 
-class king : public piece
+class king : piece
 {
 protected:
 	
 public:
-	king(int xpos, int ypos);
+	king(char team, int currentx, int currenty);
+	char teams;
+	int name;
 	int xpos;
 	int ypos;
+	void setXpos(int xposition);
+	void setYpos(int yposition);
+	void setCap(bool captures);
 	bool canCap;
-	void move(bool canCap);
+	int ymovement;
 	~king();
 };
 #endif //KING_H
