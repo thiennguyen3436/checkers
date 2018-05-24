@@ -3,18 +3,13 @@
 piece::piece(){
 
 }
-piece::piece(char team, int idno){
+piece::piece(char team, int idno, int ymov){
 	teams = team;
 	canCap = false;
 	id = idno;
 	xpos = 1000;
 	ypos = 1000;
-	if(team = 'w'){
-		ymovement = 1;
-	}
-	else if(team = 'b'){
-		ymovement = -1;
-	}
+	ymovement = ymov;
 }
 void piece::setXpos(int xposition){
 	xpos = xposition;

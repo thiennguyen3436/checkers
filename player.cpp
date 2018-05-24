@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "piece.h"
+#include "king.h"
 #include "player.h"
 #include <utility>
 
@@ -60,12 +61,13 @@ player::player(char team1, int cols, int* boards)
 	width = cols;
 	team = team1;
 	int initpieces = (cols*6)/4;
-	for(int i = 0; i < initpieces; i++){
-		piece a = piece(team1, i+1);
-		List.push_back(a);
-	}
+	
 	int counter = 0;
 	if(team == 'w'){
+		for(int i = 0; i < initpieces; i++){
+			piece a = piece(team1, i+1, 1);
+			List.push_back(a);
+		}
 		intTeam = 1;
 		for(int i = 0; i < cols; i++){
 			for(int j = 0; j < 3; j++){
@@ -83,6 +85,10 @@ player::player(char team1, int cols, int* boards)
 		}
 	}
 	else if(team == 'b'){
+		for(int i = 0; i < initpieces; i++){
+			piece a = piece(team1, i+1, -1);
+			List.push_back(a);
+		}
 		intTeam = 2;
 		for(int i = 0; i < cols; i++){
 			for(int j = 7; j >4; j--){
@@ -171,7 +177,7 @@ void player::move(player* otherPlayer){
 
 				}
 				else if((*this).team == 'b'){
-					if(*((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam && *((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam){
+					if(*((*this).board + (xcoor+1)*8 + (ycoor-1)) == (*this).intTeam && *((*this).board + (xcoor-1)*8 + (ycoor-1)) == (*this).intTeam){
 						std::cout << "You can't move that piece!" << std::endl;
 					}
 					else{
@@ -179,7 +185,7 @@ void player::move(player* otherPlayer){
 					}
 				}
 				else if((*this).team == 'w'){
-					if(*((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam && *((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam){
+					if(*((*this).board + (xcoor+1)*8 + (ycoor+1)) == (*this).intTeam && *((*this).board + (xcoor-1)*8 + (ycoor+1)) == (*this).intTeam){
 						std::cout << "You can't move that piece!" << std::endl;
 					}
 					else{
@@ -191,8 +197,15 @@ void player::move(player* otherPlayer){
 				std::cout << "That's not your piece!" << std::endl;
 			}
 		}
+		piece a;
 		while(valid_move == false){
-			if((*this).team == 'b'){
+			for(int i = 0; i < (*this).List.size(); i++){
+				if((*this).List[i].xpos == xcoor && (*this).List[i].ypos == ycoor){
+					a = (*this).List[i];
+					break;
+				}
+			}
+			if(a.ymovement == -1){ // this is movement for blue pieces
 				if (captures == true){
 					std::cout << "Please input the X coordinate for your destination: ";
 					while(std::getline(std::cin, input3)){
@@ -238,6 +251,10 @@ void player::move(player* otherPlayer){
 							if((*this).List[i].xpos == xcoor && (*this).List[i].ypos == ycoor){
 								(*this).List[i].xpos = xdest;
 								(*this).List[i].ypos = ydest;
+								if( (*this).List[i].ypos == 0){
+									piece a = king('b', (*this).List[i].xpos, 0);
+									std::swap((*this).List[i], a);
+								}
 							}
 						}
 						capture(otherPlayer, xcoor+deltaX, ycoor+deltaY);
@@ -287,12 +304,16 @@ void player::move(player* otherPlayer){
 							if((*this).List[i].xpos == xcoor && (*this).List[i].ypos == ycoor){
 								(*this).List[i].xpos = xdest;
 								(*this).List[i].ypos = ydest;
+								if( (*this).List[i].ypos == 0){
+									piece a = king('b', (*this).List[i].xpos, 0);
+									std::swap((*this).List[i], a);
+								}
 							}
 						}
 					}
 				}
 			}
-			else{
+			else if(a.ymovement == 1){ //this is movement for green pieces
 				if (captures == true){
 					std::cout << "Please input the X coordinate for your destination: ";
 					while(std::getline(std::cin, input3)){
@@ -321,6 +342,116 @@ void player::move(player* otherPlayer){
 							continue;
 						}
 						if((ydest != ycoor + 2)){
+							std::cout << "Please input a valid capture value: ";
+							continue;
+						}
+						char extras;
+						if(uinput >> extras){
+							std::cout << "Only integers please :)" << std::endl;
+						}
+						break;
+					}
+					if(*((*this).board + xdest*8 + ydest) == 0){
+						valid_move = true;
+						int deltaX = (xdest-xcoor)/2;
+						int deltaY = (ydest-ycoor)/2;
+						for(int i = 0; i < (*this).List.size(); i++){
+							if((*this).List[i].xpos == xcoor && (*this).List[i].ypos == ycoor){
+								(*this).List[i].xpos = xdest;
+								(*this).List[i].ypos = ydest;
+								if( (*this).List[i].ypos == 7){
+									piece a = king('b', (*this).List[i].xpos, 7);
+									std::cout << "This piece is now a king!" << std::endl;
+									std::swap((*this).List[i], a);
+								}
+							}
+						}
+						capture(otherPlayer, xcoor+deltaX, ycoor+deltaY);
+					}
+				}
+				//they need verification in order to say they were valid moves
+				else{
+					std::cout << "Please input the X coordinate for your destination: ";
+					while(std::getline(std::cin, input3)){
+						std::stringstream uinput(input3);
+
+						if(!(uinput >> xdest)){
+							std::cout << "Please input an integer: ";
+							continue;
+						}
+						if(((xdest < xcoor - 2 ) || (xdest > xcoor + 2)) && (xdest < 0)){
+							std::cout << "Please input a valid x value: ";
+							continue;
+						}
+						char extras;
+						if(uinput >> extras){
+							std::cout << "Only integers please :)" << std::endl;
+						}
+						break;
+					}
+					std::cout << "Please input the Y coordinate for your destination: ";
+					while(std::getline(std::cin, input4)){
+						std::stringstream uinput(input4);
+
+						if(!(uinput >> ydest)){
+							std::cout << "Please input an integer: ";
+							continue;
+						}
+						if((ydest != ycoor + 1)){
+							std::cout << "Please input a valid y value blah1: ";
+							continue;
+						}
+						char extras;
+						if(uinput >> extras){
+							std::cout << "Only integers please :)" << std::endl;
+						}
+						break;
+					}
+					if(*((*this).board + xdest*8 + ydest) == 0){
+						valid_move = true;
+						for(int i = 0; i < (*this).List.size(); i++){
+							if((*this).List[i].xpos == xcoor && (*this).List[i].ypos == ycoor){
+								(*this).List[i].xpos = xdest;
+								(*this).List[i].ypos = ydest;
+								if( (*this).List[i].ypos == 7){
+									piece a = king('w', (*this).List[i].xpos, 7);
+									std::cout << "This piece is now a king!" << std::endl;
+									std::swap((*this).List[i], a);
+								}
+							}
+						}
+					}
+				}
+			}
+			else if(a.ymovement == 0){ //this is movement for kings
+				if (captures == true){
+					std::cout << "Please input the X coordinate for your destination: ";
+					while(std::getline(std::cin, input3)){
+						std::stringstream uinput(input3);
+
+						if(!(uinput >> xdest)){
+							std::cout << "Please input an integer: ";
+							continue;
+						}
+						if((((xdest < xcoor - 2 ) || (xdest > xcoor + 2)) || (xdest == xdest+1)) && (xdest < 0)){
+							std::cout << "Please input a valid capture value ("<< xcoor-2 << " or " << xcoor+2 << "):";
+							continue;
+						}
+						char extras;
+						if(uinput >> extras){
+							std::cout << "Only integers please :)" << std::endl;
+						}
+						break;
+					}
+					std::cout << "Please input the Y coordinate for your destination: ";
+					while(std::getline(std::cin, input4)){
+						std::stringstream uinput(input4);
+
+						if(!(uinput >> ydest)){
+							std::cout << "Please input an integer: ";
+							continue;
+						}
+						if((ydest > ycoor + 2) || (ydest < ycoor - 2) ){
 							std::cout << "Please input a valid capture value: ";
 							continue;
 						}
@@ -371,7 +502,7 @@ void player::move(player* otherPlayer){
 							std::cout << "Please input an integer: ";
 							continue;
 						}
-						if((ydest != ycoor + 1)){
+						if((ydest > ycoor + 1) || (ydest < ycoor - 1)){
 							std::cout << "Please input a valid y value blah1: ";
 							continue;
 						}

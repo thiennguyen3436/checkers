@@ -3,11 +3,9 @@
 
 class piece
 {
-protected:
-
 public:
 	piece();
-	piece(char team, int id);
+	piece(char team, int id, int ymov);
 	char teams;
 	int id;
 	int name;

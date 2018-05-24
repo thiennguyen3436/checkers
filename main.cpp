@@ -118,6 +118,7 @@ int main(){//int argc, char* argv[]){
 
 	bool gameOver = false;
 	int moveCounter = 0;
+	int total_moves = 0;
 
 	while(gameOver == false){
 		std::cout << "player 1's turn:" << std::endl;
@@ -170,9 +171,37 @@ int main(){//int argc, char* argv[]){
 		if(pieceCountA == player1.List.size() && pieceCountB == player2.List.size()){
 			moveCounter++;
 			if(moveCounter == 50){
+				std::cout << "You drew by the 50 move rule:" << std::endl;
 				gameOver = true;
 				continue;
 			}
+		}
+		int draw;
+		if(total_moves > x*4){
+			std::string inputd;
+			std::cout << "Do both players agree to a draw? (1 for yes / 2 for no): ";
+			while(std::getline(std::cin, inputd)){
+				std::stringstream uinput(inputd);
+
+				if(!(uinput >> draw)){
+					std::cout << "Please input 1 or 2: ";
+					continue;
+				}
+				if((x < 1) || x > 2){
+					std::cout << "Please input 1 or 2: ";
+					continue;
+				}
+				char extras;
+				if(uinput >> extras){
+					std::cout << "Only 1 or 2 please :)" << std::endl;
+				}
+				break;
+			}
+		}
+		total_moves++;
+		if(draw == 1){
+			std::cout << "You agreed to a draw" << std::endl;
+			gameOver = true;
 		}
 	}
 	//
